@@ -64,8 +64,8 @@ namespace WorkshopTest.Controllers
             //var sessionModel = new UserSessionModel { UserId = 1, Name = "Nopza" };
             //_sessionContext.SetCurrentUser(sessionModel);
             //var currentUser = _sessionContext.GetCurrentUser();
-            var days = _configurationContext.GetCachingDays();
 
+            var days = _configurationContext.GetCachingDays();
             var siteLocale = _configurationContext.GetSiteLocale();
 
             //ProductViewModel productViewModel = new ProductViewModel();
@@ -82,9 +82,17 @@ namespace WorkshopTest.Controllers
         [HttpPost]
         public IActionResult Index(ProductViewModel product)
         {
-            var productName = product.SearchProductName ?? string.Empty;
+            string productName = product.SearchProductName ?? string.Empty;
 
-            product.ProductModelList = _product.Where(a => a.ProductName.Contains(productName, StringComparison.InvariantCultureIgnoreCase)).ToList();
+            if (string.IsNullOrEmpty(productName))
+            {
+                product.ProductModelList = _product.ToList();
+            }
+            else
+            {
+                product.ProductModelList = _product.Where(a => a.ProductName.Contains(productName, StringComparison.InvariantCultureIgnoreCase)).ToList();
+            }
+            
             return View(product);
         }
 
