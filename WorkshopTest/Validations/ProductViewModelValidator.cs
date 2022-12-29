@@ -11,7 +11,7 @@ namespace WorkshopTest.Validations
     {
         public ProductViewModelValidator ()
         {
-            RuleFor(x => x.SearchProductName).NotEmpty().WithMessage("Search cannot be null") ;
+            //RuleFor(x => x.SearchProductName).NotEmpty().WithMessage("Search cannot be null");
         }
     }
 }
